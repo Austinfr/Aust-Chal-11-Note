@@ -54,7 +54,7 @@ app.post('/api/notes', (req, res) => {
         
         //was having issues using the thing itself as it's own id and this is much simpler
         //just whichever spot it's in will be it's id
-        newNote.id = noteArray.length;
+        newNote.id = noteArray.length - 1;
 
         noteArray.push(newNote);
 
@@ -76,26 +76,26 @@ app.post('/api/notes', (req, res) => {
 //delete /api/notes/:id
 app.delete('/api/notes/:id', (req, res) => {
     //gets the db
-    let dataSaved = {};
     fs.readFile(database, 'utf-8', (err, data) => {
         if(err){
             throw err;
         }
 
-        dataSaved = JSON.parse(data);
+        let dataSaved = JSON.parse(data);
 
         //looks throught it to find the match
         for(let i = 0; i < dataSaved.length; i++){
             //when it's matched remove it and update our storage
-            if(JSON.stringify(dataSaved[i]) === req.params.id){
+            if(JSON.stringify(dataSaved[i].id) === req.params.id){
                 dataSaved.splice(i, 1);
 
+                //updated our database file
                 fs.writeFile(database, JSON.stringify(dataSaved), err => {
                     if(err){
                         throw err;
                     }
-
-                    res.json(dataSaved);
+                    //might not need it will see
+                    // res.json(dataSaved);
                 });
             }
         }
