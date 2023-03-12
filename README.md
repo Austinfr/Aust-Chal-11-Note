@@ -33,7 +33,7 @@ You can use this app to look at notes and keep tabs on tasks that you might need
 ## Video
 
 Here is a link to a video demonstation of this project in action:
-
+- https://youtu.be/qgAW-iuNWq8
 
 ## Testing
 
