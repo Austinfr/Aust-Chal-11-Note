@@ -32,7 +32,7 @@ app.get('/api/notes', (req, res) => {
         if(err){
             throw err;
         }
-
+        
         res.json(JSON.parse(data.toString()));
 
     });
@@ -54,7 +54,16 @@ app.post('/api/notes', (req, res) => {
         
         //was having issues using the thing itself as it's own id and this is much simpler
         //just whichever spot it's in will be it's id
-        newNote.id = noteArray.length - 1;
+        let id = noteArray.length
+
+        //this is just so duplicate note ids are harder to come by
+        for(let i = 0; i < noteArray.length; i++){
+            if(noteArray[i].id === id){
+                id++;
+            }
+        }
+
+        newNote.id = id;
 
         noteArray.push(newNote);
 
@@ -94,8 +103,8 @@ app.delete('/api/notes/:id', (req, res) => {
                     if(err){
                         throw err;
                     }
-                    //might not need it will see
-                    // res.json(dataSaved);
+
+                    res.json(dataSaved);
                 });
             }
         }
